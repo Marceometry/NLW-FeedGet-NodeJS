@@ -1,11 +1,8 @@
-import { MailAdapter } from '../adapters'
-import { FeedbacksRepository } from '../repositories'
+import { MailAdapter } from '@/adapters'
+import { FeedbacksRepository } from '@/repositories'
+import { FeedbackModel } from '@/domain/models'
 
-interface SubmitFeedbackUseCaseRequest {
-  type: string
-  comment: string
-  screenshot?: string
-}
+type SubmitFeedbackUseCaseRequest = FeedbackModel
 
 export class SubmitFeedbackUseCase {
   constructor(

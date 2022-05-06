@@ -1,8 +1,6 @@
-export interface FeedbackCreateData {
-  type: string
-  comment: string
-  screenshot?: string
-}
+import { FeedbackModel } from '@/domain/models'
+
+export type FeedbackCreateData = FeedbackModel
 
 export interface FeedbackCreateResponse {
   id: string

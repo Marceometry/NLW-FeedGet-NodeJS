@@ -1,5 +1,5 @@
-import { FeedbackCreateData, FeedbacksRepository } from '..'
-import { prisma } from '../../prisma'
+import { FeedbackCreateData, FeedbacksRepository } from '@/repositories'
+import { prisma } from '@/services'
 
 export class PrismaFeedbacksRepository implements FeedbacksRepository {
   async create(data: FeedbackCreateData) {
