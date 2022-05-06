@@ -1,6 +1,7 @@
-import { MailAdapter } from '@/adapters'
-import { FeedbacksRepository } from '@/repositories'
+import { InvalidFormatError, RequiredError } from '@/domain/errors'
 import { FeedbackModel } from '@/domain/models'
+import { FeedbacksRepository } from '@/repositories'
+import { MailAdapter } from '@/adapters'
 
 type SubmitFeedbackUseCaseRequest = FeedbackModel
 
@@ -12,6 +13,12 @@ export class SubmitFeedbackUseCase {
 
   async execute(req: SubmitFeedbackUseCaseRequest) {
     const { type, comment, screenshot } = req
+
+    if (!type) throw new RequiredError('type')
+    if (!comment) throw new RequiredError('comment')
+    if (screenshot && !screenshot.startsWith('data:image/png;base64')) {
+      throw new InvalidFormatError('screenshot')
+    }
 
     const { id } = await this.feedbacksRepository.create({
       type,

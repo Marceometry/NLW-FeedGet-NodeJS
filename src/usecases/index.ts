@@ -1,1 +1,1 @@
-export * from './SubmitFeedbackUsecase'
+export * from './SubmitFeedbackUseCase'
