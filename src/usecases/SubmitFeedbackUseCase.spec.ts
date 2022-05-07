@@ -1,4 +1,5 @@
 import { FeedbacksRepositorySpy, MailAdapterSpy } from '@/domain/test'
+import { FeedbackModel, FeedbackType } from '@/domain/models'
 import { SubmitFeedbackUseCase } from '.'
 
 const feedbacksRepositorySpy = new FeedbacksRepositorySpy()
@@ -9,7 +10,7 @@ const submitFeedback = new SubmitFeedbackUseCase(
   mailAdapterSpy
 )
 
-const payload = {
+const payload: FeedbackModel = {
   type: 'BUG',
   comment: 'comment',
   screenshot: 'data:image/png;base64screenshot.jpg',
@@ -24,7 +25,10 @@ describe('Submit feedback', () => {
   })
 
   it('should throw an error if type is empty', async () => {
-    const promise = submitFeedback.execute({ ...payload, type: '' })
+    const promise = submitFeedback.execute({
+      ...payload,
+      type: '' as FeedbackType,
+    })
 
     expect(promise).rejects.toThrow()
   })
