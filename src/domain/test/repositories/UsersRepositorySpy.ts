@@ -2,11 +2,18 @@ import { UsersRepository } from '@/repositories'
 
 export class UsersRepositorySpy implements UsersRepository {
   callsCount = 0
-  response = { id: 'id' }
+  responseCreate = { id: 'id' }
+  responseGetById = { email: 'email', username: 'username' }
 
   async create() {
     this.callsCount++
 
-    return this.response
+    return this.responseCreate
+  }
+
+  async getById() {
+    this.callsCount++
+
+    return this.responseGetById
   }
 }

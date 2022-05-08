@@ -2,9 +2,9 @@ import { UsersRepositorySpy } from '@/domain/test'
 import { UserModel } from '@/domain/models'
 import { CreateUserUseCase } from '..'
 
-const feedbacksRepositorySpy = new UsersRepositorySpy()
+const usersRepositorySpy = new UsersRepositorySpy()
 
-const submitUser = new CreateUserUseCase(feedbacksRepositorySpy)
+const submitUser = new CreateUserUseCase(usersRepositorySpy)
 
 const payload: UserModel = {
   email: 'email@email.com',
@@ -12,10 +12,10 @@ const payload: UserModel = {
 }
 
 describe('Create user', () => {
-  it('should be able to submit a feedback', async () => {
+  it('should be able to submit a user', async () => {
     await submitUser.execute(payload)
 
-    expect(feedbacksRepositorySpy.callsCount).toBe(1)
+    expect(usersRepositorySpy.callsCount).toBe(1)
   })
 
   it('should throw an error if username is empty', async () => {

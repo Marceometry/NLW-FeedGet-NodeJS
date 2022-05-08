@@ -12,7 +12,11 @@ export class SubmitFeedbackUseCase {
   ) {}
 
   async execute(data: SubmitFeedbackUseCaseRequest) {
-    const { type, comment, screenshot, userId } = data
+    const { type, comment, screenshot } = data
+
+    const userId = '63c5d1b2-f628-4622-90c0-baab7a3520f2'
+    const username = ''
+    const email = ''
 
     if (!type) throw new RequiredError('type')
     if (!comment) throw new RequiredError('comment')
@@ -20,9 +24,9 @@ export class SubmitFeedbackUseCase {
       throw new InvalidFormatError('screenshot')
     }
 
-    const { id } = await this.feedbacksRepository.create(data)
+    const { id } = await this.feedbacksRepository.create({ ...data, userId })
 
-    await this.mailAdapter.sendMail(data)
+    await this.mailAdapter.sendMail({ ...data, email, username })
 
     return { id }
   }

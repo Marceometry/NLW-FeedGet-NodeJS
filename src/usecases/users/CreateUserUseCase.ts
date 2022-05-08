@@ -13,8 +13,6 @@ export class CreateUserUseCase {
     if (!email) throw new RequiredError('email')
     if (!username) throw new RequiredError('username')
 
-    const { id } = await this.usersRepository.create(data)
-
-    return { id }
+    return await this.usersRepository.create(data)
   }
 }
