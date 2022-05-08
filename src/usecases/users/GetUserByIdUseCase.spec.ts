@@ -19,4 +19,12 @@ describe('Get user by id', () => {
 
     expect(promise).rejects.toThrow()
   })
+
+  it('should throw an error if user is empty', async () => {
+    usersRepositorySpy.responseGetById = null as any
+
+    const promise = submitUser.execute(payload)
+
+    expect(promise).rejects.toThrow()
+  })
 })

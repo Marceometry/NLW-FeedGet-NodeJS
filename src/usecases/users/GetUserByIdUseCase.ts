@@ -14,6 +14,10 @@ export class GetUserByIdUseCase {
 
     if (!id) throw new RequiredError('id')
 
-    return await this.usersRepository.getById({ id })
+    const user = await this.usersRepository.getById({ id })
+
+    if (!user) throw new Error('User not found')
+
+    return user
   }
 }

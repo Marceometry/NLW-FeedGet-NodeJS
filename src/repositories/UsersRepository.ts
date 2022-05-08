@@ -12,5 +12,5 @@ export type UserCreateResponse = {
 
 export interface UsersRepository {
   create: (data: UserCreateData) => Promise<UserCreateResponse>
-  getById: (data: UserGetByIdData) => Promise<UserModel>
+  getById: (data: UserGetByIdData) => Promise<UserModel | null>
 }

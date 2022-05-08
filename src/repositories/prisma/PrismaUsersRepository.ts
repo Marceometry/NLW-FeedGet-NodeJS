@@ -26,6 +26,6 @@ export class PrismaUsersRepository implements UsersRepository {
       },
     })
 
-    return response!
+    return response
   }
 }

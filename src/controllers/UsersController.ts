@@ -22,6 +22,6 @@ export class UsersController {
 
     const response = await this.getUserByIdUseCase.execute(data)
 
-    return res.status(201).json(response)
+    return res.status(200).json(response)
   }
 }
