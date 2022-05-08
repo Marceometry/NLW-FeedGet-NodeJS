@@ -12,16 +12,24 @@ export class UsersController {
   public create = async (req: Request, res: Response) => {
     const data = req.body
 
-    const response = await this.createUserUseCase.execute(data)
+    try {
+      const response = await this.createUserUseCase.execute(data)
 
-    return res.status(201).json(response)
+      return res.status(201).json(response)
+    } catch (error) {
+      return res.status(500).json(error)
+    }
   }
 
   public getById = async (req: Request, res: Response) => {
     const data = { id: req.params.id }
 
-    const response = await this.getUserByIdUseCase.execute(data)
+    try {
+      const response = await this.getUserByIdUseCase.execute(data)
 
-    return res.status(200).json(response)
+      return res.status(200).json(response)
+    } catch (error) {
+      return res.status(500).json(error)
+    }
   }
 }
