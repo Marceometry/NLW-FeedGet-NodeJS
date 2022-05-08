@@ -32,8 +32,8 @@ export class FeedbacksController {
         email,
       })
       return res.status(201).json({ id })
-    } catch (error) {
-      return res.status(500).json(error)
+    } catch (error: any) {
+      return res.status(error.statusCode).json(error.message)
     }
   }
 }
