@@ -17,5 +17,19 @@ model Feedback {
   comment    String
   screenshot String?
 
+  userId String
+  User   User?  @relation(fields: [userId], references: [id])
+
   @@map("feedbacks")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  username String
+  email    String
+
+  Feedback Feedback[]
+
+  @@map("users")
 }

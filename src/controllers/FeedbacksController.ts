@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { NodemailerMailAdapter } from '@/adapters'
 import { PrismaFeedbacksRepository } from '@/repositories'
 import { SubmitFeedbackUseCase } from '@/usecases'
+import { FeedbackModel } from '@/domain/models'
 
 export class FeedbacksController {
   private prismaFeedbacksRepository = new PrismaFeedbacksRepository()
@@ -12,7 +13,7 @@ export class FeedbacksController {
   )
 
   public create = async (req: Request, res: Response) => {
-    const data = req.body
+    const data: FeedbackModel = req.body
 
     const { id } = await this.submitFeedbackUseCase.execute(data)
 
