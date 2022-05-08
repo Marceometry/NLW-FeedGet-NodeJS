@@ -1,25 +1,8 @@
 import { Router } from 'express'
-import { NodemailerMailAdapter } from '@/adapters'
-import { PrismaFeedbacksRepository } from '@/repositories'
-import { SubmitFeedbackUseCase } from '@/usecases'
+import { FeedbacksController } from '@/controllers'
+
+const feedbacksController = new FeedbacksController()
 
 export const feedbacksRoutes = Router()
 
-feedbacksRoutes.post('/create', async (req, res) => {
-  const { type, comment, screenshot } = req.body
-
-  const prismaFeedbacksRepository = new PrismaFeedbacksRepository()
-  const nodemailerMailAdapter = new NodemailerMailAdapter()
-  const submitFeedbackUseCase = new SubmitFeedbackUseCase(
-    prismaFeedbacksRepository,
-    nodemailerMailAdapter
-  )
-
-  const { id } = await submitFeedbackUseCase.execute({
-    type,
-    comment,
-    screenshot,
-  })
-
-  return res.status(201).json({ id })
-})
+feedbacksRoutes.post('/create', feedbacksController.create)
