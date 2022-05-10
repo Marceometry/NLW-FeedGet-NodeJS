@@ -6,5 +6,5 @@ export interface FeedbackCreateResponse {
 
 export interface FeedbacksRepository {
   create: (data: FeedbackModel) => Promise<FeedbackCreateResponse>
-  getList: (userId: string) => Promise<FeedbackModel[]>
+  getList: (clientId: string) => Promise<FeedbackModel[]>
 }

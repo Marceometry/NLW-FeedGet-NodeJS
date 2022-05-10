@@ -10,5 +10,5 @@ export type FeedbackModel = {
   type: FeedbackType
   comment: string
   screenshot?: string
-  userId: string
+  clientId: string
 }

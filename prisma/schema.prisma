@@ -17,8 +17,8 @@ model Feedback {
   comment    String
   screenshot String?
 
-  userId String
-  User   User?  @relation(fields: [userId], references: [id])
+  clientId String
+  User     User?  @relation(fields: [clientId], references: [id])
 
   @@map("feedbacks")
 }

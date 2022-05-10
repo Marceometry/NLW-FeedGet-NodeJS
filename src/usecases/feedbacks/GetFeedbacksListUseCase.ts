@@ -4,9 +4,9 @@ import { FeedbacksRepository } from '@/repositories'
 export class GetFeedbacksListUseCase {
   constructor(private feedbacksRepository: FeedbacksRepository) {}
 
-  async execute(userId: string) {
-    if (!userId) throw new RequiredError('userId')
+  async execute(clientId: string) {
+    if (!clientId) throw new RequiredError('clientId')
 
-    return await this.feedbacksRepository.getList(userId)
+    return await this.feedbacksRepository.getList(clientId)
   }
 }

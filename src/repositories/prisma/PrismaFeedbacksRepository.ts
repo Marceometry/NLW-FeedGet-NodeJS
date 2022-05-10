@@ -4,24 +4,24 @@ import { prisma } from '@/services'
 
 export class PrismaFeedbacksRepository implements FeedbacksRepository {
   async create(data: FeedbackModel) {
-    const { type, comment, screenshot, userId } = data
+    const { type, comment, screenshot, clientId } = data
 
     const { id } = await prisma.feedback.create({
       data: {
         type,
         comment,
         screenshot,
-        userId,
+        clientId,
       },
     })
 
     return { id }
   }
 
-  async getList(userId: string) {
+  async getList(clientId: string) {
     const response = await prisma.feedback.findMany({
       where: {
-        userId,
+        clientId,
       },
     })
 

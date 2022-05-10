@@ -3,7 +3,7 @@ import { FeedbackModel } from '@/domain/models'
 export const mockFeedback = (): FeedbackModel => ({
   type: 'BUG',
   comment: 'comment',
-  userId: 'userId',
+  clientId: 'clientId',
   screenshot: 'data:image/png;base64screenshot.jpg',
 })
 

@@ -25,7 +25,7 @@ export class SubmitFeedbackUseCase {
 
     const { id } = await this.feedbacksRepository.create({
       ...data,
-      userId: user.id,
+      clientId: user.id,
     })
 
     await this.mailAdapter.sendMail({ ...data, user })

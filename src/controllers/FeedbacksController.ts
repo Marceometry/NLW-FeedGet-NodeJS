@@ -30,7 +30,7 @@ export class FeedbacksController {
     const data: FeedbackModel = req.body
 
     try {
-      const user = await this.getUserByIdUseCase.execute(data.userId)
+      const user = await this.getUserByIdUseCase.execute(data.clientId)
       const { id } = await this.submitFeedbackUseCase.execute({
         ...data,
         user,
@@ -42,10 +42,10 @@ export class FeedbacksController {
   }
 
   public getList = async (req: Request, res: Response) => {
-    const userId = req.query.userId as string
+    const clientId = req.query.clientId as string
 
     try {
-      const response = await this.getFeedbacksListUseCase.execute(userId)
+      const response = await this.getFeedbacksListUseCase.execute(clientId)
       return res.status(200).json(response)
     } catch (error: any) {
       return res.status(error.statusCode).json(error.message)
