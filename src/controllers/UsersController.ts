@@ -1,15 +1,16 @@
 import { Request, Response } from 'express'
-import axios from 'axios'
 import { PrismaUsersRepository } from '@/repositories'
+import { GithubAuthAdapter } from '@/adapters'
 import {
   CreateUserUseCase,
   GetUserByIdUseCase,
   GetUserByGithubIdUseCase,
+  AuthUserUseCase,
 } from '@/usecases'
-import { NotFoundError } from '@/domain/errors'
 
 export class UsersController {
   private prismaUsersRepository = new PrismaUsersRepository()
+  private githubAuthAdapter = new GithubAuthAdapter()
   private createUserUseCase = new CreateUserUseCase(this.prismaUsersRepository)
   private getUserByIdUseCase = new GetUserByIdUseCase(
     this.prismaUsersRepository
@@ -17,6 +18,7 @@ export class UsersController {
   private getUserByGithubIdUseCase = new GetUserByGithubIdUseCase(
     this.prismaUsersRepository
   )
+  private AuthUserUseCase = new AuthUserUseCase(this.githubAuthAdapter)
 
   public create = async (req: Request, res: Response) => {
     const data = req.body
@@ -58,36 +60,14 @@ export class UsersController {
     const { code } = req.body
 
     try {
-      const body = {
-        code,
-        client_id: process.env.GITHUB_CLIENT_ID as string,
-        client_secret: process.env.GITHUB_CLIENT_SECRET as string,
-        redirect_uri: process.env.GITHUB_CLIENT_REDIRECT_URI as string,
-      }
-      const { data } = await axios.post(
-        `https://github.com/login/oauth/access_token`,
-        body
+      const user = await this.AuthUserUseCase.execute(code)
+
+      const userData = await this.getUserByGithubIdUseCase.execute(
+        user.github_id
       )
+      if (userData) return res.status(200).json(userData)
 
-      const params = new URLSearchParams(data)
-      const access_token = params.get('access_token')
-      const { data: user } = await axios.get(`https://api.github.com/user`, {
-        headers: {
-          Authorization: 'token ' + access_token,
-        },
-      })
-
-      const userExists = await this.getUserByGithubIdUseCase.execute(user.id)
-      if (userExists) return res.status(200).json(userExists)
-
-      const payload = {
-        username: user.login,
-        name: user.name,
-        email: user.email,
-        avatar_url: user.avatar_url,
-        github_id: user.id,
-      }
-      const response = await this.createUserUseCase.execute(payload)
+      const response = await this.createUserUseCase.execute(user)
       return res.status(201).json(response)
     } catch (error: any) {
       return res.status(500).json(error.message)

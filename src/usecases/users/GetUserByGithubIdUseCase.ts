@@ -1,4 +1,4 @@
-import { NotFoundError, RequiredError } from '@/domain/errors'
+import { RequiredError } from '@/domain/errors'
 import { UsersRepository } from '@/repositories'
 
 export class GetUserByGithubIdUseCase {

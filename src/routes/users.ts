@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import { UsersController } from '@/controllers'
-import axios from 'axios'
 
 const usersController = new UsersController()
 
