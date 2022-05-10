@@ -19,7 +19,7 @@ describe('Get user by id', () => {
   })
 
   it('should throw an error if user is empty', async () => {
-    usersRepositorySpy.getByGithubId = null as any
+    usersRepositorySpy.getById = null as any
 
     const promise = getUser.execute('id')
 

@@ -99,5 +99,6 @@
     "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
     "plugins": [{ "transform": "typescript-transform-paths" } ]
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

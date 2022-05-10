@@ -14,14 +14,20 @@ describe('Create user', () => {
     expect(usersRepositorySpy.callsCount).toBe(1)
   })
 
+  it('should throw an error if name is empty', async () => {
+    const promise = submitUser.execute({ ...payload, name: '' })
+
+    expect(promise).rejects.toThrow()
+  })
+
   it('should throw an error if username is empty', async () => {
     const promise = submitUser.execute({ ...payload, username: '' })
 
     expect(promise).rejects.toThrow()
   })
 
-  it('should throw an error if email is empty', async () => {
-    const promise = submitUser.execute({ ...payload, email: '' })
+  it('should throw an error if github_id is empty', async () => {
+    const promise = submitUser.execute({ ...payload, github_id: null as any })
 
     expect(promise).rejects.toThrow()
   })

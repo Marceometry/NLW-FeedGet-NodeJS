@@ -1,4 +1,9 @@
-import { FeedbacksRepositorySpy, MailAdapterSpy, mockUser } from '@/domain/test'
+import {
+  FeedbacksRepositorySpy,
+  MailAdapterSpy,
+  mockFeedback,
+  mockUser,
+} from '@/domain/test'
 import { FeedbackType } from '@/domain/models'
 import { SubmitFeedbackUseCase, SubmitFeedbackUseCaseRequest } from '.'
 
@@ -11,10 +16,7 @@ const submitFeedback = new SubmitFeedbackUseCase(
 )
 
 const payload: SubmitFeedbackUseCaseRequest = {
-  type: 'BUG',
-  comment: 'comment',
-  screenshot: 'data:image/png;base64screenshot.jpg',
-  userId: 'userId',
+  ...mockFeedback(),
   user: mockUser(),
 }
 
