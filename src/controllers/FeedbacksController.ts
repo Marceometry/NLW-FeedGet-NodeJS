@@ -4,7 +4,11 @@ import {
   PrismaFeedbacksRepository,
   PrismaUsersRepository,
 } from '@/repositories'
-import { GetUserByIdUseCase, SubmitFeedbackUseCase } from '@/usecases'
+import {
+  GetFeedbacksListUseCase,
+  GetUserByIdUseCase,
+  SubmitFeedbackUseCase,
+} from '@/usecases'
 import { FeedbackModel } from '@/domain/models'
 
 export class FeedbacksController {
@@ -18,6 +22,9 @@ export class FeedbacksController {
   private getUserByIdUseCase = new GetUserByIdUseCase(
     this.prismaUsersRepository
   )
+  private getFeedbacksListUseCase = new GetFeedbacksListUseCase(
+    this.prismaFeedbacksRepository
+  )
 
   public create = async (req: Request, res: Response) => {
     const data: FeedbackModel = req.body
@@ -29,6 +36,17 @@ export class FeedbacksController {
         user,
       })
       return res.status(201).json({ id })
+    } catch (error: any) {
+      return res.status(error.statusCode).json(error.message)
+    }
+  }
+
+  public getList = async (req: Request, res: Response) => {
+    const userId = req.query.userId as string
+
+    try {
+      const response = await this.getFeedbacksListUseCase.execute(userId)
+      return res.status(200).json(response)
     } catch (error: any) {
       return res.status(error.statusCode).json(error.message)
     }
