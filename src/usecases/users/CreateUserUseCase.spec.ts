@@ -1,15 +1,11 @@
-import { UsersRepositorySpy } from '@/domain/test'
-import { UserModel } from '@/domain/models'
-import { CreateUserUseCase } from '..'
+import { UsersRepositorySpy, mockUser } from '@/domain/test'
+import { CreateUserUseCase } from '.'
 
 const usersRepositorySpy = new UsersRepositorySpy()
 
 const submitUser = new CreateUserUseCase(usersRepositorySpy)
 
-const payload: UserModel = {
-  email: 'email@email.com',
-  username: 'username',
-}
+const payload = mockUser()
 
 describe('Create user', () => {
   it('should be able to submit a user', async () => {

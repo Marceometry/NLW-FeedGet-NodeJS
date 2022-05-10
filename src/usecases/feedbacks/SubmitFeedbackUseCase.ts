@@ -18,7 +18,7 @@ export class SubmitFeedbackUseCase {
 
     if (!type) throw new RequiredError('type')
     if (!comment) throw new RequiredError('comment')
-    if (!user.id) throw new RequiredError('user.id')
+    if (!user?.id) throw new RequiredError('user.id')
     if (screenshot && !screenshot.startsWith('data:image/png;base64')) {
       throw new InvalidFormatError('screenshot')
     }

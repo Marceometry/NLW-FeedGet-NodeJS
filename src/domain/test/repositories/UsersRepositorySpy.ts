@@ -1,19 +1,27 @@
 import { UsersRepository } from '@/repositories'
+import { mockUser } from '@/domain/test'
 
 export class UsersRepositorySpy implements UsersRepository {
   callsCount = 0
-  responseCreate = { id: 'id' }
-  responseGetById = { email: 'email', username: 'username' }
+  createResponse = mockUser()
+  getByIdResponse = mockUser()
+  getByGithubIdResponse = mockUser()
 
   async create() {
     this.callsCount++
 
-    return this.responseCreate
+    return this.createResponse
   }
 
   async getById() {
     this.callsCount++
 
-    return this.responseGetById
+    return this.getByIdResponse
+  }
+
+  async getByGithubId() {
+    this.callsCount++
+
+    return this.getByGithubIdResponse
   }
 }

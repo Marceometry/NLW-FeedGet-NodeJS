@@ -1,29 +1,27 @@
 import { UsersRepositorySpy } from '@/domain/test'
-import { GetUserByIdUseCase } from '..'
+import { GetUserByIdUseCase } from '.'
 
 const usersRepositorySpy = new UsersRepositorySpy()
 
-const submitUser = new GetUserByIdUseCase(usersRepositorySpy)
-
-const payload = { id: 'id' }
+const getUser = new GetUserByIdUseCase(usersRepositorySpy)
 
 describe('Get user by id', () => {
-  it('should be able to submit a user', async () => {
-    await submitUser.execute(payload)
+  it('should be able to get a user', async () => {
+    await getUser.execute('id')
 
     expect(usersRepositorySpy.callsCount).toBe(1)
   })
 
   it('should throw an error if id is empty', async () => {
-    const promise = submitUser.execute({ id: '' })
+    const promise = getUser.execute('')
 
     expect(promise).rejects.toThrow()
   })
 
   it('should throw an error if user is empty', async () => {
-    usersRepositorySpy.responseGetById = null as any
+    usersRepositorySpy.getByGithubId = null as any
 
-    const promise = submitUser.execute(payload)
+    const promise = getUser.execute('id')
 
     expect(promise).rejects.toThrow()
   })
