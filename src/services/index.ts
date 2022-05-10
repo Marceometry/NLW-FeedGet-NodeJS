@@ -1,2 +1,2 @@
-export * from './nodemailer'
+export * from './mailgun'
 export * from './prisma'

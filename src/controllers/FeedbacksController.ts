@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { NodemailerMailAdapter } from '@/adapters'
+import { MailgunMailAdapter } from '@/adapters'
 import {
   PrismaFeedbacksRepository,
   PrismaUsersRepository,
@@ -14,7 +14,7 @@ import { FeedbackModel } from '@/domain/models'
 export class FeedbacksController {
   private prismaFeedbacksRepository = new PrismaFeedbacksRepository()
   private prismaUsersRepository = new PrismaUsersRepository()
-  private nodemailerMailAdapter = new NodemailerMailAdapter()
+  private nodemailerMailAdapter = new MailgunMailAdapter()
   private submitFeedbackUseCase = new SubmitFeedbackUseCase(
     this.prismaFeedbacksRepository,
     this.nodemailerMailAdapter
