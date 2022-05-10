@@ -7,7 +7,7 @@ export class GithubAuthAdapter implements AuthAdapter {
       code,
       client_id: process.env.GITHUB_CLIENT_ID as string,
       client_secret: process.env.GITHUB_CLIENT_SECRET as string,
-      redirect_uri: process.env.GITHUB_CLIENT_REDIRECT_URI as string,
+      redirect_uri: process.env.GITHUB_REDIRECT_URI as string,
     }
     const { data: tokenData } = await axios.post(
       `https://github.com/login/oauth/access_token`,
