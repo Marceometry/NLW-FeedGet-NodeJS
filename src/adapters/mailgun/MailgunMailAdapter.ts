@@ -35,8 +35,4 @@ export class MailgunMailAdapter implements MailAdapter {
 
     await mailer.send(user.email!, subject, html)
   }
-
-  async mail() {
-    await mailer.send('marceometry@gmail.com', 'teste', '<h1>teste</h1>')
-  }
 }

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { PrismaUsersRepository } from '@/repositories'
-import { GithubAuthAdapter, MailgunMailAdapter } from '@/adapters'
+import { GithubAuthAdapter } from '@/adapters'
 import {
   CreateUserUseCase,
   GetUserByIdUseCase,
@@ -72,10 +72,5 @@ export class UsersController {
     } catch (error: any) {
       return res.status(500).json(error.message)
     }
-  }
-
-  public mail = async (req: Request, res: Response) => {
-    const nodemailerMailAdapter = new MailgunMailAdapter()
-    nodemailerMailAdapter.mail()
   }
 }
