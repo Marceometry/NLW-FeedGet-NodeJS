@@ -8,10 +8,11 @@ export class CreateUserUseCase {
   constructor(private usersRepository: UsersRepository) {}
 
   async execute(data: CreateUserUseCaseRequest) {
-    const { email, username } = data
+    const { username, name, github_id } = data
 
-    if (!email) throw new RequiredError('email')
+    if (!name) throw new RequiredError('name')
     if (!username) throw new RequiredError('username')
+    if (!github_id) throw new RequiredError('github_id')
 
     return await this.usersRepository.create(data)
   }

@@ -1,16 +1,12 @@
 import { NotFoundError, RequiredError } from '@/domain/errors'
 import { UsersRepository } from '@/repositories'
 
-export class GetUserByIdUseCase {
+export class GetUserByGithubIdUseCase {
   constructor(private usersRepository: UsersRepository) {}
 
-  async execute(id: string) {
+  async execute(id: number) {
     if (!id) throw new RequiredError('id')
 
-    const user = await this.usersRepository.getById(id)
-
-    if (!user) throw new NotFoundError('User')
-
-    return user
+    return await this.usersRepository.getByGithubId(id)
   }
 }

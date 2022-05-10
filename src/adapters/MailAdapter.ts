@@ -1,8 +1,7 @@
-import { FeedbackModel } from '@/domain/models'
+import { FeedbackModel, UserModel } from '@/domain/models'
 
 export interface SendMailData extends FeedbackModel {
-  username: string
-  email: string
+  user: UserModel
 }
 
 export interface MailAdapter {

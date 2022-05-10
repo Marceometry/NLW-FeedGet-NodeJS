@@ -1,28 +1,36 @@
-import {
-  UserCreateData,
-  UserGetByIdData,
-  UsersRepository,
-} from '@/repositories'
+import { UserModel } from '@/domain/models'
+import { UsersRepository } from '@/repositories'
 import { prisma } from '@/services'
 
 export class PrismaUsersRepository implements UsersRepository {
-  async create(data: UserCreateData) {
-    const { email, username } = data
+  async create(data: UserModel) {
+    const { email, username, name, avatar_url, github_id } = data
 
     return await prisma.user.create({
       data: {
+        name,
         email,
         username,
+        avatar_url,
+        github_id,
       },
     })
   }
 
-  async getById(data: UserGetByIdData) {
-    const { id } = data
-
+  async getById(id: string) {
     const response = await prisma.user.findUnique({
       where: {
         id,
+      },
+    })
+
+    return response
+  }
+
+  async getByGithubId(github_id: number) {
+    const response = await prisma.user.findUnique({
+      where: {
+        github_id,
       },
     })
 

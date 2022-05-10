@@ -24,10 +24,13 @@ model Feedback {
 }
 
 model User {
-  id String @id @default(uuid())
+  id        String @id @default(uuid())
+  github_id Int    @unique
 
-  username String
-  email    String
+  username   String
+  name       String
+  email      String?
+  avatar_url String?
 
   Feedback Feedback[]
 

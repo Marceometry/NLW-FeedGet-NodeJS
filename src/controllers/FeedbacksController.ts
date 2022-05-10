@@ -23,13 +23,10 @@ export class FeedbacksController {
     const data: FeedbackModel = req.body
 
     try {
-      const { email, username } = await this.getUserByIdUseCase.execute({
-        id: data.userId,
-      })
+      const user = await this.getUserByIdUseCase.execute(data.userId)
       const { id } = await this.submitFeedbackUseCase.execute({
         ...data,
-        username,
-        email,
+        user,
       })
       return res.status(201).json({ id })
     } catch (error: any) {
