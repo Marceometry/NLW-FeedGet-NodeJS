@@ -1,6 +1,7 @@
 import { MailAdapter, SendMailData } from '@/adapters'
 import { FeedbackTypesEnum } from '@/domain/models'
 import { mailer } from '@/services'
+import { getEmailHtml } from './utils'
 
 export class MailgunMailAdapter implements MailAdapter {
   constructor() {
@@ -16,22 +17,11 @@ export class MailgunMailAdapter implements MailAdapter {
   }
 
   async sendMail(data: SendMailData) {
-    const { comment, type, screenshot, user } = data
+    const { type, user } = data
 
     const subject = `Novo feedback - ${FeedbackTypesEnum[type]}`
 
-    const screenshotHTML = screenshot
-      ? [`<p>Screenshot:</p>`, `<img src="${screenshot}">`]
-      : []
-
-    const html = [
-      `<div style="font-family: sans-serif; font-size: 16px; color: #111">`,
-      `<h1>Olá, ${user.name}! Temos um novo feedback.</h1>`,
-      `<p>Tipo do feedback: ${FeedbackTypesEnum[type]}</p>`,
-      `<p>Comentário: ${comment}</p>`,
-      ...screenshotHTML,
-      `</div>`,
-    ].join('\n')
+    const html = getEmailHtml(data)
 
     await mailer.send(user.email!, subject, html)
   }
