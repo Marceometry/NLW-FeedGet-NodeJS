@@ -24,7 +24,6 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [NodeJS](https://nodejs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [TailwindCSS](https://www.prisma.io/)
 - [Mailgun](https://www.mailgun.com/)
 
 ## 💣 Funcionalidades
