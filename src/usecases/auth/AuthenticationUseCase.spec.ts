@@ -1,9 +1,9 @@
 import { AuthAdapterSpy } from '@/domain/test'
-import { AuthUserUseCase } from '.'
+import { AuthenticationUseCase } from '.'
 
 const authAdapterSpy = new AuthAdapterSpy()
 
-const getUser = new AuthUserUseCase(authAdapterSpy)
+const getUser = new AuthenticationUseCase(authAdapterSpy)
 
 describe('Auth user', () => {
   it('should be able to get a user', async () => {

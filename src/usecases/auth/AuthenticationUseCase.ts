@@ -1,7 +1,7 @@
 import { AuthAdapter } from '@/adapters'
 import { NotFoundError, RequiredError } from '@/domain/errors'
 
-export class AuthUserUseCase {
+export class AuthenticationUseCase {
   constructor(private authAdapter: AuthAdapter) {}
 
   async execute(code: string) {

@@ -1,4 +1,6 @@
 export * from './github'
+export * from './jsonwebtoken'
 export * from './mailgun'
 export * from './AuthAdapter'
+export * from './JwtAdapter'
 export * from './MailAdapter'

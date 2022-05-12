@@ -1,16 +1,18 @@
 import { Request, Response } from 'express'
 import { PrismaUsersRepository } from '@/repositories'
-import { GithubAuthAdapter } from '@/adapters'
+import { GithubAuthAdapter, JsonWebTokenJwtAdapter } from '@/adapters'
 import {
   CreateUserUseCase,
   GetUserByIdUseCase,
   GetUserByGithubIdUseCase,
-  AuthUserUseCase,
+  AuthenticationUseCase,
+  GenerateJwtTokenUseCase,
 } from '@/usecases'
 
 export class UsersController {
   private prismaUsersRepository = new PrismaUsersRepository()
   private githubAuthAdapter = new GithubAuthAdapter()
+  private jsonWebTokenJwtAdapter = new JsonWebTokenJwtAdapter()
   private createUserUseCase = new CreateUserUseCase(this.prismaUsersRepository)
   private getUserByIdUseCase = new GetUserByIdUseCase(
     this.prismaUsersRepository
@@ -18,7 +20,12 @@ export class UsersController {
   private getUserByGithubIdUseCase = new GetUserByGithubIdUseCase(
     this.prismaUsersRepository
   )
-  private AuthUserUseCase = new AuthUserUseCase(this.githubAuthAdapter)
+  private authenticationUseCase = new AuthenticationUseCase(
+    this.githubAuthAdapter
+  )
+  private generateJwtTokenUseCase = new GenerateJwtTokenUseCase(
+    this.jsonWebTokenJwtAdapter
+  )
 
   public create = async (req: Request, res: Response) => {
     const data = req.body
@@ -60,15 +67,21 @@ export class UsersController {
     const { code } = req.body
 
     try {
-      const user = await this.AuthUserUseCase.execute(code)
+      const authUser = await this.authenticationUseCase.execute(code)
 
-      const userData = await this.getUserByGithubIdUseCase.execute(
-        user.github_id
-      )
-      if (userData) return res.status(200).json(userData)
+      let statusCode = 200
+      let user = await this.getUserByGithubIdUseCase.execute(authUser.github_id)
 
-      const response = await this.createUserUseCase.execute(user)
-      return res.status(201).json(response)
+      if (!user) {
+        user = await this.createUserUseCase.execute(authUser)
+        statusCode = 201
+      }
+
+      const token = this.generateJwtTokenUseCase.execute(user)
+
+      const response = { user, token }
+
+      return res.status(statusCode).json(response)
     } catch (error: any) {
       return res.status(500).json(error.message)
     }
