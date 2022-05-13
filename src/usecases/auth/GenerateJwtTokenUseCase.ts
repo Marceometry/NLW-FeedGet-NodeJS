@@ -5,7 +5,7 @@ import { UserModel } from '@/domain/models'
 export class GenerateJwtTokenUseCase {
   constructor(private jwtAdapter: JwtAdapter) {}
 
-  async execute(user: UserModel) {
+  execute(user: UserModel) {
     if (!user?.id) throw new RequiredError('user')
 
     const token = this.jwtAdapter.generateToken(user)
