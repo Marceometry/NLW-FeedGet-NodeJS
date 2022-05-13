@@ -9,10 +9,9 @@ export const getEmailHtml = ({
 }: SendMailData) => {
   const screenshotHTML = screenshot
     ? [
-        `<p>Screenshot:</p>`,
-        `<img style="border-radius: 4px" src="${screenshot}" alt="Foto da tela da aplicação">`,
+        `Acesse o dashboard para ver a screenshot: https://feedget.online/dashboard`,
       ]
-    : []
+    : [`Esse feedback não possui screenshot.`]
 
   return [
     `<table style="width: 100%; font-family: sans-serif; background-color: rgb(244, 244, 245); color: rgb(24, 24, 27);">`,
