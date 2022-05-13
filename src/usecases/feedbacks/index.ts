@@ -1,2 +1,5 @@
+export * from './DeleteAllFeedbacksUseCase'
+export * from './DeleteFeedbackUseCase'
+export * from './DeleteManyFeedbacksUseCase'
 export * from './SubmitFeedbackUseCase'
 export * from './GetFeedbacksListUseCase'

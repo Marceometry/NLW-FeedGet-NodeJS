@@ -10,5 +10,5 @@ app.use(express.json({ limit: '10mb' }))
 app.use(routes)
 
 app.listen(port, () => {
-  console.log(`HTTP server listening on port ${port}`)
+  console.log(`🚀 - HTTP server is running at port ${port}`)
 })

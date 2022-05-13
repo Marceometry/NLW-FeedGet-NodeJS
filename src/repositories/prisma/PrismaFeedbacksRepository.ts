@@ -27,4 +27,36 @@ export class PrismaFeedbacksRepository implements FeedbacksRepository {
 
     return response as FeedbackModel[]
   }
+
+  async deleteAll(clientId: string) {
+    const response = await prisma.feedback.deleteMany({
+      where: {
+        clientId,
+      },
+    })
+
+    return !!response
+  }
+
+  async deleteMany(feedbacks: string[]) {
+    const response = await prisma.feedback.deleteMany({
+      where: {
+        id: {
+          in: feedbacks,
+        },
+      },
+    })
+
+    return !!response
+  }
+
+  async delete(id: string) {
+    const response = await prisma.feedback.delete({
+      where: {
+        id,
+      },
+    })
+
+    return !!response
+  }
 }

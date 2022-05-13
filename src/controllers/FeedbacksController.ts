@@ -1,15 +1,18 @@
 import { Request, Response } from 'express'
 import { MailgunMailAdapter } from '@/adapters'
+import { FeedbackModel } from '@/domain/models'
 import {
   PrismaFeedbacksRepository,
   PrismaUsersRepository,
 } from '@/repositories'
 import {
+  DeleteAllFeedbacksUseCase,
+  DeleteFeedbackUseCase,
+  DeleteManyFeedbacksUseCase,
   GetFeedbacksListUseCase,
   GetUserByIdUseCase,
   SubmitFeedbackUseCase,
 } from '@/usecases'
-import { FeedbackModel } from '@/domain/models'
 
 export class FeedbacksController {
   private prismaFeedbacksRepository = new PrismaFeedbacksRepository()
@@ -23,6 +26,15 @@ export class FeedbacksController {
     this.prismaUsersRepository
   )
   private getFeedbacksListUseCase = new GetFeedbacksListUseCase(
+    this.prismaFeedbacksRepository
+  )
+  private deleteFeedbackUseCase = new DeleteFeedbackUseCase(
+    this.prismaFeedbacksRepository
+  )
+  private deleteAllFeedbacksUseCase = new DeleteAllFeedbacksUseCase(
+    this.prismaFeedbacksRepository
+  )
+  private deleteManyFeedbacksUseCase = new DeleteManyFeedbacksUseCase(
     this.prismaFeedbacksRepository
   )
 
@@ -46,6 +58,39 @@ export class FeedbacksController {
 
     try {
       const response = await this.getFeedbacksListUseCase.execute(clientId)
+      return res.status(200).json(response)
+    } catch (error: any) {
+      return res.status(error.statusCode).json(error.message)
+    }
+  }
+
+  public delete = async (req: Request, res: Response) => {
+    const id = req.query.id as string
+
+    try {
+      const response = await this.deleteFeedbackUseCase.execute(id)
+      return res.status(200).json(response)
+    } catch (error: any) {
+      return res.status(error.statusCode).json(error.message)
+    }
+  }
+
+  public deleteAll = async (req: Request, res: Response) => {
+    const clientId = req.query.clientId as string
+
+    try {
+      const response = await this.deleteAllFeedbacksUseCase.execute(clientId)
+      return res.status(200).json(response)
+    } catch (error: any) {
+      return res.status(error.statusCode).json(error.message)
+    }
+  }
+
+  public deleteMany = async (req: Request, res: Response) => {
+    const { feedbacks } = req.body
+
+    try {
+      const response = await this.deleteManyFeedbacksUseCase.execute(feedbacks)
       return res.status(200).json(response)
     } catch (error: any) {
       return res.status(error.statusCode).json(error.message)
