@@ -32,6 +32,8 @@ model User {
   name       String
   email      String?
   avatar_url String?
+  createdAt  DateTime?
+  updatedAt  DateTime?
 
   Feedback Feedback[]
 

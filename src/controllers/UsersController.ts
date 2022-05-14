@@ -46,7 +46,7 @@ export class UsersController {
 
     try {
       const response = await this.updateUserUseCase.execute(email, id)
-      console.log({ response })
+
       return res.status(200).json(response)
     } catch (error: any) {
       return res.status(error.statusCode).json(error.message)

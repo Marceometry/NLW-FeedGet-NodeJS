@@ -13,6 +13,7 @@ export class PrismaUsersRepository implements UsersRepository {
         username,
         avatar_url,
         github_id,
+        createdAt: new Date().toISOString(),
       },
     })
   }
@@ -21,6 +22,7 @@ export class PrismaUsersRepository implements UsersRepository {
     const user = await prisma.user.update({
       data: {
         email,
+        updatedAt: new Date().toISOString(),
       },
       where: {
         id,
