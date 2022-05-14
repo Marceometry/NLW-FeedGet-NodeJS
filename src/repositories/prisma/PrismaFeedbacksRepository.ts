@@ -12,6 +12,7 @@ export class PrismaFeedbacksRepository implements FeedbacksRepository {
         comment,
         screenshot,
         clientId,
+        createdAt: new Date().toISOString(),
       },
     })
 

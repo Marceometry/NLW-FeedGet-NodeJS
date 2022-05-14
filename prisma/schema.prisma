@@ -16,6 +16,7 @@ model Feedback {
   type       String
   comment    String
   screenshot String?
+  createdAt  DateTime
 
   clientId String
   User     User?  @relation(fields: [clientId], references: [id])
