@@ -5,6 +5,7 @@ export const mockFeedback = (): FeedbackModel => ({
   comment: 'comment',
   clientId: 'clientId',
   screenshot: 'data:image/png;base64screenshot.jpg',
+  createdAt: new Date(),
 })
 
 export const mockFeedbacks = (): FeedbackModel[] => [
