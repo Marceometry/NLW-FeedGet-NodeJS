@@ -6,6 +6,7 @@ const usersController = new UsersController()
 
 export const usersRoutes = Router()
 
-usersRoutes.get('/:id', authMiddleware, usersController.getById)
 usersRoutes.post('/create', usersController.create)
 usersRoutes.post('/authenticate', usersController.authenticate)
+usersRoutes.get('/:id', authMiddleware, usersController.getById)
+usersRoutes.put('/update', authMiddleware, usersController.update)

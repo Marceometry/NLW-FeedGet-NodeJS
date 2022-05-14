@@ -7,6 +7,7 @@ import {
   GetUserByGithubIdUseCase,
   AuthenticationUseCase,
   GenerateJwtTokenUseCase,
+  UpdateUserUseCase,
 } from '@/usecases'
 
 export class UsersController {
@@ -14,6 +15,7 @@ export class UsersController {
   private githubAuthAdapter = new GithubAuthAdapter()
   private jsonWebTokenJwtAdapter = new JsonWebTokenJwtAdapter()
   private createUserUseCase = new CreateUserUseCase(this.prismaUsersRepository)
+  private updateUserUseCase = new UpdateUserUseCase(this.prismaUsersRepository)
   private getUserByIdUseCase = new GetUserByIdUseCase(
     this.prismaUsersRepository
   )
@@ -34,6 +36,18 @@ export class UsersController {
       const response = await this.createUserUseCase.execute(data)
 
       return res.status(201).json(response)
+    } catch (error: any) {
+      return res.status(error.statusCode).json(error.message)
+    }
+  }
+
+  public update = async (req: Request, res: Response) => {
+    const { email, id } = req.body
+
+    try {
+      const response = await this.updateUserUseCase.execute(email, id)
+      console.log({ response })
+      return res.status(200).json(response)
     } catch (error: any) {
       return res.status(error.statusCode).json(error.message)
     }

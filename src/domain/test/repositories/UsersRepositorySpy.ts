@@ -13,6 +13,12 @@ export class UsersRepositorySpy implements UsersRepository {
     return this.createResponse
   }
 
+  async update() {
+    this.callsCount++
+
+    return this.createResponse
+  }
+
   async getById() {
     this.callsCount++
 

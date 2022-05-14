@@ -17,6 +17,19 @@ export class PrismaUsersRepository implements UsersRepository {
     })
   }
 
+  async update(email: string, id: string) {
+    const user = await prisma.user.update({
+      data: {
+        email,
+      },
+      where: {
+        id,
+      },
+    })
+
+    return user
+  }
+
   async getById(id: string) {
     const response = await prisma.user.findUnique({
       where: {
