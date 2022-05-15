@@ -1,4 +1,5 @@
 export * from './CreateUserUseCase'
+export * from './DeleteUserUseCase'
 export * from './UpdateUserUseCase'
 export * from './GetUserByIdUseCase'
 export * from './GetUserByGithubIdUseCase'
